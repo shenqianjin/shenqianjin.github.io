@@ -9,7 +9,8 @@ jobs:
   deploy:
     runs-on: ubuntu-22.04
     permissions:
-      contents: write
+      contents: read
+      pages: write
     steps:
       - uses: actions/checkout@v4
         with:
