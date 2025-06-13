@@ -1,11 +1,32 @@
+---
+title: "Manual: Create Your Personal Github Pages"
+date: 2025-06-13T23:00:00+08:00
+tags: [Manual, Github]
+featured_image: ""
+description: ""
+---
+
+## Why:
+
+## What:
+
+## How:
+#### Step1: Create a GitHub repository.
+#### Step2: Push your local repository to GitHub.
+
+#### Add workflow action to deploy in Github.
+
+- Click `Action` -> `New workflow`
+- Search "Hugo" in the `Search workflows` input frame. It will show you `Hugo` workflow.
+- Click `Configure`, the action content looks like the below.
+```yaml
 # Sample workflow for building and deploying a Hugo site to GitHub Pages
 name: Deploy Hugo site to Pages
 
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches:
-      - main
+    branches: ["master"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -32,51 +53,31 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.147.2
-      HUGO_ENVIRONMENT: production
-      TZ: America/Los_Angeles
+      HUGO_VERSION: 0.128.0
     steps:
-#      - name: Install Hugo CLI
-#        run: |
-#          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
-#          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
-#      - name: Install Dart Sass
-#        run: sudo snap install dart-sass
+      - name: Install Hugo CLI
+        run: |
+          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+      - name: Install Dart Sass
+        run: sudo snap install dart-sass
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
-          fetch-depth: 0
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
-#      - name: Cache Restore
-#        id: cache-restore
-#        uses: actions/cache/restore@v4
-#        with:
-#          path: |
-#            ${{ runner.temp }}/hugo_cache
-#          key: hugo-${{ github.run_id }}
-#          restore-keys:
-#            hugo-
-#      - name: Configure Git
-#        run: git config core.quotepath false
       - name: Build with Hugo
+        env:
+          HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
+          HUGO_ENVIRONMENT: production
         run: |
           hugo \
-            --gc \
-            --minify
-#            --baseURL "${{ steps.pages.outputs.base_url }}/" \
-#            --cacheDir "${{ runner.temp }}/hugo_cache"
-#      - name: Cache Save
-#        id: cache-save
-#        uses: actions/cache/save@v4
-#        with:
-#          path: |
-#            ${{ runner.temp }}/hugo_cache
-#          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
+            --minify \
+            --baseURL "${{ steps.pages.outputs.base_url }}/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -93,3 +94,13 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+```
+- naming it with any name you want and then click `Commit changes` to add it to your repo.
+
+When GitHub has finished building and deploying your site, the color of the status indicator will change to green.
+
+
+
+
+
+
