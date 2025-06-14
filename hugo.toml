@@ -1,5 +1,6 @@
 # refer: https://hugoloveit.com/theme-documentation-basics/
 
+# Returns the base URL as defined in the site configuration.
 baseURL = "http://example.org/"
 # Change the default theme to be use when building the site with Hugo
 theme = "LoveIt"
@@ -9,6 +10,13 @@ title = "My New Hugo Site"
 languageCode = "en"
 # language name ["English", "简体中文", "Français", "Polski", ...]
 languageName = "English"
+# 启用分类和标签
+enableCategories = true
+enableTags = true
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
 
 # Menu config
 [menu]
@@ -46,3 +54,9 @@ languageName = "English"
   [markup.highlight]
     # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
     noClasses = false
+
+tags = [
+  "testing",
+  "manual",
+  "github"
+]
