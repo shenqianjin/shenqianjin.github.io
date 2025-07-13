@@ -5,18 +5,12 @@ baseURL = "http://example.org/"
 # Change the default theme to be use when building the site with Hugo
 theme = "LoveIt"
 # website title
-title = "My New Hugo Site"
+title = "SyncShenSite"
 # language code ["en", "zh-CN", "fr", "pl", ...]
 languageCode = "en"
 # language name ["English", "简体中文", "Français", "Polski", ...]
 languageName = "English"
-# 启用分类和标签
-enableCategories = true
-enableTags = true
 
-[taxonomies]
-  category = "categories"
-  tag = "tags"
 
 # Menu config
 [menu]
@@ -54,9 +48,3 @@ enableTags = true
   [markup.highlight]
     # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
     noClasses = false
-
-tags = [
-  "testing",
-  "manual",
-  "github"
-]
