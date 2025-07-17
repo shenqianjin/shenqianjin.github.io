@@ -309,7 +309,28 @@ GFS为在廉价商用设备上运行提供了容错能力，并可以在有大�
      （如果错误在primary中发生，那么操作将不会被分配顺序，也不会被继续下发到其他副本。）只要错误发生，该请求都会被认为是失败的，且被修改的区域的状态为inconsistent。
       client中的代码会通过重试失败的变更来处理这种错误。首先它会重试几次步骤（3）到步骤（7），如果还没有成功，再从write请求的初始操作开始重试。
 
+## 下期预告
+
 ## 分布式文件系统 - AWS S3
+## 分布式文件系统 - Kodo
+## 分布式文件系统 - S3Plus
+
+## 分布式文件系统 - CubeFS
+![CubeFSArchitecture](cubefs-architecture.png)
+
+## 分布式文件系统 - 3FS
+![3FSArchitecture](3fs-architecture.png)
+
+所有组件均接入 RDMA 网络实现高速互联，DeepSeek 内部使用 InfiniBand:
+![3FSArchitectureWithRDMA](3fs-architecture-with-rdma.png)
+
+创新点主要包括：
+- 软硬件协同设计：硬件层面，Fat-Tree拓扑网络、高速交换机（Infiniband），多个SSD硬盘和高速网卡，保证了高IOPS和吞吐量。软件层面，Direct I/O、AIO异步接口、RDMA Read、数据对齐等技术，减少了内存拷贝和CPU开销，提高了数据读取效率。
+- 计算存储分离：3FS将数据存储服务与计算节点分离，专门存储模型训练所需的样本数据。客户端部署在计算节点侧，通过网络访问部署在存储节点侧的3FS服务端。
+- 高效的数据读取模式：3FS采用Direct I/O模式读取数据，绕过File Cache，减少了内存消耗。同时，使用Linux AIO和io_uring接口完成样本的异步读取，从而在低CPU占用下实现高读写吞吐。
+- 优化的数据格式：3FS推荐使用FFRecord格式存储样本数据。FFRecord支持随机批量读取，包含数据校验功能，并适配PyTorch的Dataset和Dataloader接口。
+- 网络优化：3FS通过Infiniband技术构建高速网络，并采用虚拟通道机制隔离不同类型的流量，优化网络配置，优化路由算法。此外，3FS还采用了自研的HFReduce通信库，进一步提升了网络通信效率。
+- 用户态文件系统（FUSE）支持：3FS vNext提供了特殊的用户态文件系统FUSE，在用户空间提供3FS vNext的POSIX接口，提高安全性、可维护性，并支持更多的文件操作命令。
 
 **引用**
 * Filesystems in the Linux kernel: https://www.kernel.org/doc/html/latest/filesystems/
@@ -323,3 +344,5 @@ GFS为在廉价商用设备上运行提供了容错能力，并可以在有大�
 * APFS: https://support.apple.com/zh-cn/guide/disk-utility/aside/glose9c04d04/22..6/mac/14.0
 * The Sun Network Filesystem: Design, Implementation and Experience: https://cs.ucf.edu/~eurip/papers/sandbergnfs.pdf
 * GFS: https://pdos.csail.mit.edu/6.824/papers/gfs.pdf
+* CubeFS: https://cubefs.io/zh/docs/master/overview/architecture.html
+* 
