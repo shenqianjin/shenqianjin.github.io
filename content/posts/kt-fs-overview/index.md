@@ -90,7 +90,8 @@ mount -l
 | **Ext4** | 2006 (Linux 2.6.19) | Linux社区 | 支持Extent（连续块分配）、延迟分配，提升大文件性能 | 16TB | 1EB | 约 40亿（理论值）| Linux | Linux通用服务器/桌面 | 平衡性能与稳定性，支持16TB大文件 | 无快照、压缩等高级功能 |
 | **Btrfs** | 2007 | Oracle | 支持快照、压缩、去重、RAID，面向现代存储需求 | 16EB | 16EB | 理论无限（64位架构）| Linux | NAS、虚拟机存储 | 快照、数据去重、RAID支持 | RAID 5/6不稳定，碎片问题显著 |
 | **APFS** | 2016 (WWDC) | Apple | 专为SSD/闪存优化，支持快照、加密、空间共享，苹果生态专用 | 8EB | 8EB |理论无限（容器化设计）|  Apple | macOS/iOS设备、SSD优化场景 | 写时复制、加密、空间共享 | 仅限苹果生态，Windows兼容性差 |
-对比总结：
+
+**对比总结：**
 - NTFS：Windows 生态首选，Linux 支持需 ntfs-3g。
 - Ext4：Linux 默认选择，适合通用场景。
 - XFS：企业级高性能存储（RHEL/CentOS 默认）。
@@ -345,4 +346,4 @@ GFS为在廉价商用设备上运行提供了容错能力，并可以在有大�
 * The Sun Network Filesystem: Design, Implementation and Experience: https://cs.ucf.edu/~eurip/papers/sandbergnfs.pdf
 * GFS: https://pdos.csail.mit.edu/6.824/papers/gfs.pdf
 * CubeFS: https://cubefs.io/zh/docs/master/overview/architecture.html
-* 
+* 3FS: https://cloud.tencent.com/developer/article/2504081
