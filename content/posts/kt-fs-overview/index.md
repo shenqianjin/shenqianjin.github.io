@@ -179,6 +179,12 @@ mount -l
 > - Double-indirect block: (file blocks $block_size/4 + 12 to ($block_size / 4) ^ 2 + ($block_size / 4) + 11, or 1036 to 1049611 if 4KiB blocks). (max file size is about 4GB)  
 > - Triple-indirect block: (file blocks ($block_size / 4) ^ 2 + ($block_size / 4) + 12 to ($block_size / 4) ^ 3 + ($block_size / 4) ^ 2 + ($block_size / 4) + 12, or 1049612 to 1074791436 if 4KiB blocks). (max file size is about 4TB)
 
+## 单机文件系统Ext4 - 读取过程
+![FSLinuxExt4FlowRead](fs-linux-ext4-flow-read.png)
+
+## 单机文件系统Ext4 - 写入过程
+![FSLinuxExt4FlowWrite](fs-linux-ext4-flow-write.png)
+
 ## 单机文件系统Ext4 - 小结: 磁盘访问的一些基本规则
 - 磁盘一次只能读写一整块
 - 存储文件必须存储内容数据和元数据
