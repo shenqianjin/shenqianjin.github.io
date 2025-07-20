@@ -107,7 +107,7 @@ mount -l
 | **高并发访问** | **XFS** 在多线程环境下（如HPC、AI训练）吞吐量最高。**Ext3/Ext4** 在低并发时更稳定。 |
 | **元数据操作** | **XFS** 早期删除小文件性能差，后通过“延迟记录”优化。 **Btrfs** 因复杂元数据管理，目录操作较慢。 |
 
-## Ext4 数据组织
+## 单机文件系统Ext4 - 数据组织
 
 假设你手里有一块硬盘，大小为 1T，你还有一堆文件。这些文件在硬盘看来，就是一堆二进制数据而已。
 ![FSLinuxExt4DiskRawFiles](fs-linux-ext4-disk-rawFiles.png)
@@ -162,7 +162,7 @@ mount -l
 
 **思考: inode 的 i_blocks 是一个大小为 15的数据，如果一个文件很大，15个数据块放不下，怎么办?**
 
-## Ext4 数据组织和间接寻址
+## 单机文件系统Ext4 - 数据组织和间接寻址
 ![FSLinuxExt4Layout](fs-linux-ext4-layout.png)
 [Ext4文件系统存储结构](https://www.kernel.org/doc/html/latest/filesystems/ext4/overview.html#layout)
 
@@ -179,7 +179,7 @@ mount -l
 > - Double-indirect block: (file blocks $block_size/4 + 12 to ($block_size / 4) ^ 2 + ($block_size / 4) + 11, or 1036 to 1049611 if 4KiB blocks). (max file size is about 4GB)  
 > - Triple-indirect block: (file blocks ($block_size / 4) ^ 2 + ($block_size / 4) + 12 to ($block_size / 4) ^ 3 + ($block_size / 4) ^ 2 + ($block_size / 4) + 12, or 1049612 to 1074791436 if 4KiB blocks). (max file size is about 4TB)
 
-## Ext4 小结: 磁盘访问的一些基本规则
+## 单机文件系统Ext4 - 小结: 磁盘访问的一些基本规则
 - 磁盘一次只能读写一整块
 - 存储文件必须存储内容数据和元数据
 - 当文件大小小于一块，仍然占用一整块。
@@ -188,7 +188,7 @@ mount -l
 - 文件超大(4MB~4GB), inode加二级间接索引到存储磁盘块。
 - 文件巨大(4GB～), inode加三级间接索引到存储磁盘块。
 
-## Ext4 可靠性保证
+## 单机文件系统Ext4 - 可靠性保证
 - 写入新数据需要分配新的块时，一共要做三次更新，数据位图、文件inode和数据本身。如果在这个时候发生断电或系统奔溃怎么办？
 > 比如可能inode和位图已经更新，但数据位图却没能显示新分配出去的块。 总之，可能会发生数据不一致，或用户不想要的结果。 
 >
@@ -235,7 +235,7 @@ VFS 的设计理念被广泛采纳，并影响了后续的 Unix 变种（如 Lin
 > - 1994年: Linux 1.0 发布，初步集成 VFS 框架，支持 Ext、Minix 等早期文件系统。
 > - 2001年: Linux 2.4发布，VFS 进一步完善，增加对日志文件系统（如 Ext3）和网络文件系统的支持。
 
-## VFS - 实现机制
+## 虚拟文件系统 - VFS实现机制
 
 1985年, Sun Microsystems 提出 Virtual File System (VFS) 并实现，最初是为了支持 SunOS 2.0 操作系统中的 NFS（Network File System，网络文件系统），以解决不同文件系统之间的兼容性问题。
 
