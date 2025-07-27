@@ -58,5 +58,8 @@ featuredImagePreview: ""
 
 ## 引用
 - 重构: https://www.refactoring.com/catalog/
-
+- 代码的坏味道: https://cloud.tencent.com/developer/article/1835315
+- https://chenzhigao.github.io/2023/05/code-bad-smell/
+- https://gausszhou.github.io/refactoring2-zh/ch3.html#_3-7-%E5%8F%91%E6%95%A3%E5%BC%8F%E5%8F%98%E5%8C%96-divergent-change
+- 
 
