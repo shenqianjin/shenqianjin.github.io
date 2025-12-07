@@ -113,6 +113,7 @@ name=write-4MB
 stonewall
 ```
 
+### 批量测试文件 fio_test.sh
 ```shell
 #!/bin/bash
 
@@ -133,4 +134,8 @@ echo "$rws" | tr ',' '\n' | while read rw; do
       --filename=/xxx/fio_test_files/"$rw-$block_size.$cur_time"
     done
 done
+```
+### 执行例子
+```shell
+fio_test.sh read,randread,write,randwrite,rw,randrw 2m,4m,8m
 ```
